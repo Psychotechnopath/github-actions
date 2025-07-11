@@ -13,18 +13,28 @@ permissions:
 env:
   AZURE_RESOURCEGROUP_NAME: ToyWebsiteTest
   ENVIRONMENT_TYPE: Test
+  AZURE_CLI_VERSION: 2.72.0
+
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Install Azure CLI ${{ env.AZURE_CLI_VERSION }}
+      run: |
+        sudo az upgrade --yes --version $AZURE_CLI_VERSION --only-show-errors
+        az version
     - name: Run Bicep linter
       run: az bicep build --file deploy/main.bicep
   validate:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Install Azure CLI ${{ env.AZURE_CLI_VERSION }}
+      run: |
+        sudo az upgrade --yes --version $AZURE_CLI_VERSION --only-show-errors
+        az version
     - uses: azure/login@v1
       name: Sign in to Azure
       with:
@@ -44,6 +54,10 @@ jobs:
     needs: [lint, validate]
     steps:
     - uses: actions/checkout@v3
+    - name: Install Azure CLI ${{ env.AZURE_CLI_VERSION }}
+      run: |
+        sudo az upgrade --yes --version $AZURE_CLI_VERSION --only-show-errors
+        az version
     - uses: azure/login@v1
       name: Sign in to Azure
       with:
