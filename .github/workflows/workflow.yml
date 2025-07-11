@@ -27,8 +27,8 @@ jobs:
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         sudo apt-get install -y --allow-downgrades azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs)
         az version
-        - name: Run Bicep linter
-          run: az bicep build --file deploy/main.bicep
+    - name: Run Bicep linter
+      run: az bicep build --file deploy/main.bicep
   validate:
     runs-on: ubuntu-latest
     steps:
@@ -39,8 +39,6 @@ jobs:
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         sudo apt-get install -y --allow-downgrades azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs)
         az version
-        - name: Run Bicep linter
-          run: az bicep build --file deploy/main.bicep
     - uses: azure/login@v1
       name: Sign in to Azure
       with:
@@ -60,6 +58,12 @@ jobs:
     needs: [lint, validate]
     steps:
     - uses: actions/checkout@v3
+    - name: Install Azure CLI ${{ env.AZURE_CLI_VERSION }}
+      run: |
+        sudo rm -rf /usr/bin/az
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        sudo apt-get install -y --allow-downgrades azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs)
+        az version
     - uses: azure/login@v1
       name: Sign in to Azure
       with:
@@ -86,8 +90,6 @@ jobs:
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         sudo apt-get install -y --allow-downgrades azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs)
         az version
-        - name: Run Bicep linter
-          run: az bicep build --file deploy/main.bicep
     - uses: azure/login@v1
       name: Sign in to Azure
       with:
