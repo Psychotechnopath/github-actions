@@ -20,7 +20,7 @@ var applicationInsightsName = 'toywebsite'
 var storageAccountName = 'mystorage${resourceNameSuffix}'
 
 // Define the SKUs for each component based on the environment type. 
-//Add comment to kick-off workflow once more.
+//Add comment to kick-off workflow once more. ONE MORE TIME
 var environmentConfigurationMap = {
   Production: {
     appServicePlan: {
