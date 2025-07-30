@@ -81,13 +81,11 @@ jobs:
         additionalArguments: --what-if
   deploy:
     runs-on: ubuntu-latest
-    environment: Website
     needs: preview
     outputs:
       appServiceAppHostName: ${{ steps.deploy.outputs.appServiceAppHostName }}
     steps:
     - uses: actions/checkout@v3
-      id: deploy
     - name: Install Azure CLI ${{ env.AZURE_CLI_VERSION }}
       run: |
         sudo rm -rf /usr/bin/az
@@ -101,6 +99,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - uses: azure/arm-deploy@v1
+      id: deploy
       name: Deploy website
       with:
         failOnStdErr: false
