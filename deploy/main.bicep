@@ -13,6 +13,7 @@ param environmentType string
 param resourceNameSuffix string = uniqueString(resourceGroup().id)
 
 // Define the names for resources.
+//Small committy to main to trigger workflow 
 var appServiceAppName = 'toy-website-${resourceNameSuffix}'
 var appServicePlanName = 'toy-website'
 var logAnalyticsWorkspaceName = 'workspace-${resourceNameSuffix}'
